@@ -77,7 +77,7 @@ model MedicalRecord {
   visitReason String
   medicationsPrescribed Json
   treatmentSummary String
-  doctorName String
+  doctorName String?
   followUpInstructions String?
   documents Json?
   createdAt DateTime @default(now())

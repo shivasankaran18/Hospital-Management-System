@@ -21833,16 +21833,16 @@ export namespace Prisma {
 
   export type IntimationWhereUniqueInput = Prisma.AtLeast<{
     id?: number
+    abhaId?: string
     AND?: IntimationWhereInput | IntimationWhereInput[]
     OR?: IntimationWhereInput[]
     NOT?: IntimationWhereInput | IntimationWhereInput[]
-    abhaId?: StringFilter<"Intimation"> | string
     reason?: StringNullableFilter<"Intimation"> | string | null
     deptId?: StringNullableFilter<"Intimation"> | string | null
     date?: StringFilter<"Intimation"> | string
     time?: StringFilter<"Intimation"> | string
     department?: XOR<DepartmentsNullableRelationFilter, DepartmentsWhereInput> | null
-  }, "id">
+  }, "id" | "abhaId">
 
   export type IntimationOrderByWithAggregationInput = {
     id?: SortOrder

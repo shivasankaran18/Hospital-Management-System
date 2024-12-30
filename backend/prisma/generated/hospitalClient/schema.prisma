@@ -155,7 +155,7 @@ model Admission {
 
 model Intimation {
   id         Int          @id @default(autoincrement())
-  abhaId     String
+  abhaId     String       @unique
   reason     String?
   deptId     String?
   department Departments? @relation(fields: [deptId], references: [id], onDelete: Cascade)

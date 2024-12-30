@@ -1,11 +1,19 @@
 import bcrypt from "bcryptjs"
 import validator from "validator";
 import jwt from "jsonwebtoken";
+import { PrismaClient as centralPrismaClient } from "../prisma/generated/central/index.js";
 import { DesignationType, PrismaClient, QueueStatus } from "../prisma/generated/hospitalClient/index.js";
 import { queue } from "../queue.js";
 const createToken = (id)=>{
     return jwt.sign({id},process.env.JWT_SECRET);
 }
+const centralPrisma = new centralPrismaClient({
+    datasources:{
+        db:{
+            url:process.env.CENTRAL_DB_URL
+        }
+    }
+})
 
 const doctorRegister = async(req,res)=>{
     const prisma = req.prisma;
@@ -117,13 +125,13 @@ const addMedications = async(req,res)=>{
                 data:{
                     medications:medications,
                     feedback:feedback
-                },
+                },select:{
+                    reason : true
+                }
             })
-            const op = await prisma.oPDQueue.update({
+            const op = await prisma.oPDQueue.delete({
                 where:{
                     patientInstanceId : abhaid
-                },data:{
-                    status:QueueStatus.Completed,
                 }
             })
             await prisma.diseaseAnalysis.upsert({
@@ -142,7 +150,16 @@ const addMedications = async(req,res)=>{
                     date: JSON.stringify(new Date()),
                 },
             });
-            
+            await centralPrisma.medicalRecord.create({
+                data:{
+                    patientId:abhaid,
+                    hospitalCode:req.headers.code,
+                    recordDate: new Date(),
+                    visitReason: patient.reason,
+                    medicationsPrescribed:medications,
+                    treatmentSummary : feedback,
+                }
+            })
         res.json({success:true,message:patient})
     }catch(err){
         console.log(err);

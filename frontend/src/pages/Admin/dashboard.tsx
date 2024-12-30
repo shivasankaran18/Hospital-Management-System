@@ -13,6 +13,7 @@ import axios from 'axios'
 import { Dialog, DialogContent } from '@/components/ui/dialog'
 import { AnalyticsDashboard } from '@/components/component/analytics'
 import { DepartmentPredictions } from '@/components/component/departmentprediction'
+import { DoctorPredCard } from '@/components/DoctorPredCard'
 
 interface PatientDetails {
   abhaId :string,
@@ -224,15 +225,15 @@ export function AdminDashboard() {
 
   const  handleOPDUpdateForCheckIn = async() =>{
     const find = appointments.find((item) => item.id === selectedCheckIn);
+    console.log("Find : "+find);
     await axios.post(`${BACKEND_URL}/api/hospital/createpatient`,{
       abhaId:find?.abhaId,
       doctorId : allocatedDoctorForCheckIn?.id,
-      queueNumber:allocatedDoctorForCheckIn?._count.opdQueue,
+      queueNumber:allocatedDoctorForCheckIn?.queueLength,
       visitType:"FreshVisit",
-      age:find?.age,
-      gender:find?.gender,
       reason:find?.reason,
-      name:find?.name
+      name:find?.name,
+      intimated : true
   },
   {
     headers:{
@@ -279,7 +280,7 @@ export function AdminDashboard() {
           }
         ).then((res)=>{
           console.log(res.data);
-          setAllocatedDoctor(res.data.doctor);
+          setAllocatedDoctorForCheckIn(res.data.doctor);
         }).catch((e)=>{
           console.log(e);
       })

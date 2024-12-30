@@ -6827,7 +6827,7 @@ export namespace Prisma {
     visitReason: string
     medicationsPrescribed: JsonValue
     treatmentSummary: string
-    doctorName: string
+    doctorName: string | null
     followUpInstructions: string | null
     documents: JsonValue | null
     createdAt: Date
@@ -6923,7 +6923,7 @@ export namespace Prisma {
       visitReason: string
       medicationsPrescribed: Prisma.JsonValue
       treatmentSummary: string
-      doctorName: string
+      doctorName: string | null
       followUpInstructions: string | null
       documents: Prisma.JsonValue | null
       createdAt: Date
@@ -11763,7 +11763,7 @@ export namespace Prisma {
     visitReason?: StringFilter<"MedicalRecord"> | string
     medicationsPrescribed?: JsonFilter<"MedicalRecord">
     treatmentSummary?: StringFilter<"MedicalRecord"> | string
-    doctorName?: StringFilter<"MedicalRecord"> | string
+    doctorName?: StringNullableFilter<"MedicalRecord"> | string | null
     followUpInstructions?: StringNullableFilter<"MedicalRecord"> | string | null
     documents?: JsonNullableFilter<"MedicalRecord">
     createdAt?: DateTimeFilter<"MedicalRecord"> | Date | string
@@ -11780,7 +11780,7 @@ export namespace Prisma {
     visitReason?: SortOrder
     medicationsPrescribed?: SortOrder
     treatmentSummary?: SortOrder
-    doctorName?: SortOrder
+    doctorName?: SortOrderInput | SortOrder
     followUpInstructions?: SortOrderInput | SortOrder
     documents?: SortOrderInput | SortOrder
     createdAt?: SortOrder
@@ -11800,7 +11800,7 @@ export namespace Prisma {
     visitReason?: StringFilter<"MedicalRecord"> | string
     medicationsPrescribed?: JsonFilter<"MedicalRecord">
     treatmentSummary?: StringFilter<"MedicalRecord"> | string
-    doctorName?: StringFilter<"MedicalRecord"> | string
+    doctorName?: StringNullableFilter<"MedicalRecord"> | string | null
     followUpInstructions?: StringNullableFilter<"MedicalRecord"> | string | null
     documents?: JsonNullableFilter<"MedicalRecord">
     createdAt?: DateTimeFilter<"MedicalRecord"> | Date | string
@@ -11817,7 +11817,7 @@ export namespace Prisma {
     visitReason?: SortOrder
     medicationsPrescribed?: SortOrder
     treatmentSummary?: SortOrder
-    doctorName?: SortOrder
+    doctorName?: SortOrderInput | SortOrder
     followUpInstructions?: SortOrderInput | SortOrder
     documents?: SortOrderInput | SortOrder
     createdAt?: SortOrder
@@ -11838,7 +11838,7 @@ export namespace Prisma {
     visitReason?: StringWithAggregatesFilter<"MedicalRecord"> | string
     medicationsPrescribed?: JsonWithAggregatesFilter<"MedicalRecord">
     treatmentSummary?: StringWithAggregatesFilter<"MedicalRecord"> | string
-    doctorName?: StringWithAggregatesFilter<"MedicalRecord"> | string
+    doctorName?: StringNullableWithAggregatesFilter<"MedicalRecord"> | string | null
     followUpInstructions?: StringNullableWithAggregatesFilter<"MedicalRecord"> | string | null
     documents?: JsonNullableWithAggregatesFilter<"MedicalRecord">
     createdAt?: DateTimeWithAggregatesFilter<"MedicalRecord"> | Date | string
@@ -12385,7 +12385,7 @@ export namespace Prisma {
     visitReason: string
     medicationsPrescribed: JsonNullValueInput | InputJsonValue
     treatmentSummary: string
-    doctorName: string
+    doctorName?: string | null
     followUpInstructions?: string | null
     documents?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
@@ -12402,7 +12402,7 @@ export namespace Prisma {
     visitReason: string
     medicationsPrescribed: JsonNullValueInput | InputJsonValue
     treatmentSummary: string
-    doctorName: string
+    doctorName?: string | null
     followUpInstructions?: string | null
     documents?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
@@ -12415,7 +12415,7 @@ export namespace Prisma {
     visitReason?: StringFieldUpdateOperationsInput | string
     medicationsPrescribed?: JsonNullValueInput | InputJsonValue
     treatmentSummary?: StringFieldUpdateOperationsInput | string
-    doctorName?: StringFieldUpdateOperationsInput | string
+    doctorName?: NullableStringFieldUpdateOperationsInput | string | null
     followUpInstructions?: NullableStringFieldUpdateOperationsInput | string | null
     documents?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -12432,7 +12432,7 @@ export namespace Prisma {
     visitReason?: StringFieldUpdateOperationsInput | string
     medicationsPrescribed?: JsonNullValueInput | InputJsonValue
     treatmentSummary?: StringFieldUpdateOperationsInput | string
-    doctorName?: StringFieldUpdateOperationsInput | string
+    doctorName?: NullableStringFieldUpdateOperationsInput | string | null
     followUpInstructions?: NullableStringFieldUpdateOperationsInput | string | null
     documents?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -12447,7 +12447,7 @@ export namespace Prisma {
     visitReason: string
     medicationsPrescribed: JsonNullValueInput | InputJsonValue
     treatmentSummary: string
-    doctorName: string
+    doctorName?: string | null
     followUpInstructions?: string | null
     documents?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
@@ -12460,7 +12460,7 @@ export namespace Prisma {
     visitReason?: StringFieldUpdateOperationsInput | string
     medicationsPrescribed?: JsonNullValueInput | InputJsonValue
     treatmentSummary?: StringFieldUpdateOperationsInput | string
-    doctorName?: StringFieldUpdateOperationsInput | string
+    doctorName?: NullableStringFieldUpdateOperationsInput | string | null
     followUpInstructions?: NullableStringFieldUpdateOperationsInput | string | null
     documents?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -12475,7 +12475,7 @@ export namespace Prisma {
     visitReason?: StringFieldUpdateOperationsInput | string
     medicationsPrescribed?: JsonNullValueInput | InputJsonValue
     treatmentSummary?: StringFieldUpdateOperationsInput | string
-    doctorName?: StringFieldUpdateOperationsInput | string
+    doctorName?: NullableStringFieldUpdateOperationsInput | string | null
     followUpInstructions?: NullableStringFieldUpdateOperationsInput | string | null
     documents?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -13894,7 +13894,7 @@ export namespace Prisma {
     visitReason: string
     medicationsPrescribed: JsonNullValueInput | InputJsonValue
     treatmentSummary: string
-    doctorName: string
+    doctorName?: string | null
     followUpInstructions?: string | null
     documents?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
@@ -13909,7 +13909,7 @@ export namespace Prisma {
     visitReason: string
     medicationsPrescribed: JsonNullValueInput | InputJsonValue
     treatmentSummary: string
-    doctorName: string
+    doctorName?: string | null
     followUpInstructions?: string | null
     documents?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
@@ -14004,7 +14004,7 @@ export namespace Prisma {
     visitReason?: StringFilter<"MedicalRecord"> | string
     medicationsPrescribed?: JsonFilter<"MedicalRecord">
     treatmentSummary?: StringFilter<"MedicalRecord"> | string
-    doctorName?: StringFilter<"MedicalRecord"> | string
+    doctorName?: StringNullableFilter<"MedicalRecord"> | string | null
     followUpInstructions?: StringNullableFilter<"MedicalRecord"> | string | null
     documents?: JsonNullableFilter<"MedicalRecord">
     createdAt?: DateTimeFilter<"MedicalRecord"> | Date | string
@@ -14093,7 +14093,7 @@ export namespace Prisma {
     visitReason: string
     medicationsPrescribed: JsonNullValueInput | InputJsonValue
     treatmentSummary: string
-    doctorName: string
+    doctorName?: string | null
     followUpInstructions?: string | null
     documents?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
@@ -14108,7 +14108,7 @@ export namespace Prisma {
     visitReason: string
     medicationsPrescribed: JsonNullValueInput | InputJsonValue
     treatmentSummary: string
-    doctorName: string
+    doctorName?: string | null
     followUpInstructions?: string | null
     documents?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
@@ -14560,7 +14560,7 @@ export namespace Prisma {
     visitReason: string
     medicationsPrescribed: JsonNullValueInput | InputJsonValue
     treatmentSummary: string
-    doctorName: string
+    doctorName?: string | null
     followUpInstructions?: string | null
     documents?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
@@ -14589,7 +14589,7 @@ export namespace Prisma {
     visitReason?: StringFieldUpdateOperationsInput | string
     medicationsPrescribed?: JsonNullValueInput | InputJsonValue
     treatmentSummary?: StringFieldUpdateOperationsInput | string
-    doctorName?: StringFieldUpdateOperationsInput | string
+    doctorName?: NullableStringFieldUpdateOperationsInput | string | null
     followUpInstructions?: NullableStringFieldUpdateOperationsInput | string | null
     documents?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -14604,7 +14604,7 @@ export namespace Prisma {
     visitReason?: StringFieldUpdateOperationsInput | string
     medicationsPrescribed?: JsonNullValueInput | InputJsonValue
     treatmentSummary?: StringFieldUpdateOperationsInput | string
-    doctorName?: StringFieldUpdateOperationsInput | string
+    doctorName?: NullableStringFieldUpdateOperationsInput | string | null
     followUpInstructions?: NullableStringFieldUpdateOperationsInput | string | null
     documents?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -14618,7 +14618,7 @@ export namespace Prisma {
     visitReason?: StringFieldUpdateOperationsInput | string
     medicationsPrescribed?: JsonNullValueInput | InputJsonValue
     treatmentSummary?: StringFieldUpdateOperationsInput | string
-    doctorName?: StringFieldUpdateOperationsInput | string
+    doctorName?: NullableStringFieldUpdateOperationsInput | string | null
     followUpInstructions?: NullableStringFieldUpdateOperationsInput | string | null
     documents?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -14684,7 +14684,7 @@ export namespace Prisma {
     visitReason: string
     medicationsPrescribed: JsonNullValueInput | InputJsonValue
     treatmentSummary: string
-    doctorName: string
+    doctorName?: string | null
     followUpInstructions?: string | null
     documents?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
@@ -14721,7 +14721,7 @@ export namespace Prisma {
     visitReason?: StringFieldUpdateOperationsInput | string
     medicationsPrescribed?: JsonNullValueInput | InputJsonValue
     treatmentSummary?: StringFieldUpdateOperationsInput | string
-    doctorName?: StringFieldUpdateOperationsInput | string
+    doctorName?: NullableStringFieldUpdateOperationsInput | string | null
     followUpInstructions?: NullableStringFieldUpdateOperationsInput | string | null
     documents?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -14736,7 +14736,7 @@ export namespace Prisma {
     visitReason?: StringFieldUpdateOperationsInput | string
     medicationsPrescribed?: JsonNullValueInput | InputJsonValue
     treatmentSummary?: StringFieldUpdateOperationsInput | string
-    doctorName?: StringFieldUpdateOperationsInput | string
+    doctorName?: NullableStringFieldUpdateOperationsInput | string | null
     followUpInstructions?: NullableStringFieldUpdateOperationsInput | string | null
     documents?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -14750,7 +14750,7 @@ export namespace Prisma {
     visitReason?: StringFieldUpdateOperationsInput | string
     medicationsPrescribed?: JsonNullValueInput | InputJsonValue
     treatmentSummary?: StringFieldUpdateOperationsInput | string
-    doctorName?: StringFieldUpdateOperationsInput | string
+    doctorName?: NullableStringFieldUpdateOperationsInput | string | null
     followUpInstructions?: NullableStringFieldUpdateOperationsInput | string | null
     documents?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string

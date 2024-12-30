@@ -104,49 +104,225 @@ function formatTimeToHHMM(date) {
 }
 
 
-const createPatientInstance = async(req,res)=>{
+// const createPatientInstance = async(req,res)=>{
+//     const prisma = req.prisma;
+//     try{
+//         const {abhaId,doctorId,queueNumber,visitType,reason,intimated} = req.body;
+//         const patient = await centralPrisma.patient.findUnique({
+//             where:{
+//                 abhaId:abhaId
+//             },select:{
+//                 name:true,
+//                 gender:true,
+//                 DOB:true
+//             }
+//         })
+//         const today = new Date();
+//         const birthDate = new Date(patient.DOB);
+//         let age = today.getFullYear() - birthDate.getFullYear();
+//         const monthDifference = today.getMonth() - birthDate.getMonth();
+//         if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < birthDate.getDate())) {
+//             age--;
+//         }
+//         const patientInstance = await prisma.PatientInstance.create({
+//             data:{
+//                 abhaId:abhaId,
+//                 // doctorId:doctorId,
+//                 queueNumber:queueNumber + 1,
+//                 visitType: (visitType === "FreshVisit") ? VisitType.FreshVisit : VisitType.Revisit,
+//                 age:parseInt(age),
+//                 Gender:patient.gender,
+//                 reason:reason ? reason : " ",
+//                 name:patient.name,
+//                 doctor: {
+//                     connect: {
+//                         id: doctorId,
+//                     },
+//                 },
+//             }
+//         })
+//         let pqno=5;
+//         if(intimated)
+//         {
+//             pqno=10;
+//         }
+//         const timee=formatTimeToHHMM(new Date());
+//         const patientqueue = await prisma.oPDQueue.create({
+//             data:{
+//                 patientInstanceId:abhaId,
+//                 doctorId:doctorId,
+//                 status:QueueStatus.Pending,
+//                 queueNumber:queueNumber,
+//                 intimated,
+//                 priority:pqno,
+//                 demotion:0,
+//                 timeStamp:timee
+//             }
+//         });
+//         await prisma.intimations.delete({
+//             where:{
+//                 abhaId:abhaId
+//             }
+//         })
+//         insertPatient(patientqueue);
+//         console.log(queue);
+//         console.log(patientInstance,patientqueue);
+//         res.json({success:true,patientInstance:patientInstance,patientqueue:patientqueue})
+//     }catch(err){
+//         console.log(err);
+//         res.json({success:false,message:err})
+//     }
+// }
+
+// const createPatientInstance = async (req, res) => {
+//     const prisma = req.prisma;
+//     try {
+//         const { abhaId, doctorId, queueNumber, visitType, reason, intimated } = req.body;
+
+//         // Fetch patient details from the central database
+//         const patient = await centralPrisma.patient.findUnique({
+//             where: { abhaId: abhaId },
+//             select: { name: true, gender: true, DOB: true },
+//         });
+
+//         if (!patient) {
+//             return res.status(404).json({ success: false, message: "Patient not found" });
+//         }
+
+//         // Calculate the patient's age
+//         const today = new Date();
+//         const birthDate = new Date(patient.DOB);
+//         let age = today.getFullYear() - birthDate.getFullYear();
+//         const monthDifference = today.getMonth() - birthDate.getMonth();
+//         if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < birthDate.getDate())) {
+//             age--;
+//         }
+
+//         // Perform all database operations within a transaction
+//         const result = await prisma.$transaction(async (tx) => {
+//             const patientInstance = await tx.PatientInstance.create({
+//                 data: {
+//                     abhaId: abhaId,
+//                     queueNumber: queueNumber + 1,
+//                     visitType: visitType === "FreshVisit" ? VisitType.FreshVisit : VisitType.Revisit,
+//                     age: parseInt(age),
+//                     Gender: patient.gender,
+//                     reason: reason || " ",
+//                     name: patient.name,
+//                     doctor: {
+//                         connect: { id: doctorId },
+//                     },
+//                 },
+//             });
+
+//             let priority = intimated ? 10 : 5;
+//             const timeStamp = formatTimeToHHMM(new Date());
+
+//             const patientQueue = await tx.oPDQueue.create({
+//                 data: {
+//                     patientInstanceId: patientInstance.id, // Use patientInstance ID instead of abhaId
+//                     doctorId: doctorId,
+//                     status: QueueStatus.Pending,
+//                     queueNumber: queueNumber,
+//                     intimated,
+//                     priority,
+//                     demotion: 0,
+//                     timeStamp: timeStamp,
+//                 },
+//             });
+
+//             await tx.intimations.delete({
+//                 where: { abhaId: abhaId },
+//             });
+
+//             return { patientInstance, patientQueue };
+//         });
+
+//         // Insert into patient queue after transaction completes
+//         insertPatient(result.patientQueue);
+
+//         console.log(result.patientInstance, result.patientQueue);
+//         res.json({ success: true, patientInstance: result.patientInstance, patientQueue: result.patientQueue });
+//     } catch (err) {
+//         console.error(err);
+//         res.json({ success: false, message: err.message });
+//     }
+// };
+
+const createPatientInstance = async (req, res) => {
     const prisma = req.prisma;
-    try{
-        const {abhaId,doctorId,queueNumber,visitType,age,gender,reason,name,intimated} = req.body;
-        const patientInstance = await prisma.PatientInstance.create({
-            data:{
-                abhaId:abhaId,
-                doctorId:doctorId,
-                queueNumber:queueNumber + 1,
-                visitType: (visitType === "FreshVisit") ? VisitType.FreshVisit : VisitType.Revisit,
-                age:parseInt(age),
-                Gender:gender,
-                reason:reason,
-                name:name
-            }
-        })
-        let pqno=5;
-        if(intimated)
-        {
-            pqno=10;
+    try {
+        const { abhaId, doctorId, queueNumber, visitType, reason, intimated } = req.body;
+
+        // Fetch patient details
+        const patient = await centralPrisma.patient.findUnique({
+            where: { abhaId },
+            select: { name: true, gender: true, DOB: true },
+        });
+
+        if (!patient) {
+            return res.status(404).json({ success: false, message: "Patient not found" });
         }
-        const timee=formatTimeToHHMM(new Date());
-        const patientqueue = await prisma.oPDQueue.create({
-            data:{
-                patientInstanceId:abhaId,
-                doctorId:doctorId,
-                status:QueueStatus.Pending,
-                queueNumber:queueNumber,
-                intimated,
-                priority:pqno,
-                demotion:0,
-                timeStamp:timee
-            }
-        })
-        insertPatient(patientqueue);
-        console.log(queue);
-        console.log(patientInstance,patientqueue);
-        res.json({success:true,patientInstance:patientInstance,patientqueue:patientqueue})
-    }catch(err){
-        console.log(err);
-        res.json({success:false,message:err})
+
+        // Calculate patient's age
+        const today = new Date();
+        const birthDate = new Date(patient.DOB);
+        let age = today.getFullYear() - birthDate.getFullYear();
+        const monthDifference = today.getMonth() - birthDate.getMonth();
+        if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < birthDate.getDate())) {
+            age--;
+        }
+
+        // Perform operations within a transaction
+        const result = await prisma.$transaction(async (tx) => {
+            // Create PatientInstance
+            const patientInstance = await tx.PatientInstance.create({
+                data: {
+                    abhaId,
+                    queueNumber: queueNumber + 1,
+                    visitType: visitType === "FreshVisit" ? VisitType.FreshVisit : VisitType.Revisit,
+                    age,
+                    Gender: patient.gender,
+                    reason: reason || " ",
+                    name: patient.name,
+                    doctor: { connect: { id: doctorId } },
+                },
+            });
+
+            const priority = intimated ? 10 : 5;
+            const timeStamp = formatTimeToHHMM(new Date());
+            const patientQueue = await tx.oPDQueue.create({
+                data: {
+                    patientInstanceId : patientInstance.abhaId, // Use the actual ID of PatientInstance
+                    doctorId,
+                    status: QueueStatus.Pending,
+                    queueNumber,
+                    intimated,
+                    priority,
+                    demotion: 0,
+                    timeStamp,
+                },
+            });
+
+            // Remove any existing intimations
+            await tx.intimation.delete({
+                where: { abhaId },
+            });
+
+            return { patientInstance, patientQueue };
+        });
+
+        // Insert patient into the queue
+        insertPatient(result.patientQueue);
+
+        console.log(result.patientInstance, result.patientQueue);
+        res.json({ success: true, patientInstance: result.patientInstance, patientQueue: result.patientQueue });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ success: false, message: err.message });
     }
-}
+};
+
 
 const addWard = async(req,res)=>{
     const prisma = req.prisma;
